@@ -52,9 +52,9 @@ That’s it!
 
 Following scheme shows how the combination of Maven, Jenkins and Artifactory works in Split team to maintain shared test automation framework components. 
 
-![process](file:///Users/daniel.reed/Documents/GitHub/Maven-Jenkins-Artifactory-Integration/images/process1.png) 
+![process](/images/process1.png) 
 
-![process 2](file:///Users/daniel.reed/Documents/GitHub/Maven-Jenkins-Artifactory-Integration/images/process2.png)
+![process 2](/images/process2.png)
 
 
 Common workflow working with Artifactory is as follows:
