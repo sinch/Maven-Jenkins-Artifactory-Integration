@@ -30,11 +30,43 @@ And, of course, you need to specify project name and path to your repository.
 
 As a final step it is required to modify target project’s POM file. Make sure you have maven-compiler-plugin and maven-jar-plugin in ‘plugins’ section.
 
-CODE HERE
+````
+<plugins>
+     <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+     </plugin>
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <archive>
+             <index>true</index>
+             <manifest>
+                <addClasspath>true</addClasspath>
+             </manifest>
+             <manifestEntries>
+                <Implementation-Version>${build.number}</Implementation-Version>
+             </manifestEntries>
+          </archive>
+        </configuration>
+     </plugin>
+</plugins>
+````
 
 Also important to add groupId, artifactId, verison and packaging to the top-level element of the POM. Please note that we are using `${build.number}` property which we are getting from Jenkins as a parameter when the project is built.
 
-CODE HERE
+````
+<groupId>CommonKeywords</groupId>
+<artifactId>CommonKeywords</artifactId>
+<version>0.0.1-SNAPSHOT-${build.number}</version>
+<packaging>jar</packaging>
+```
 
 Bingo! Everything is set up to publish compiled JAR file to remote server. All you need to do is save all your changes, push it to remote repository and press  ‘Start building’ button in your Jenkins job which is connected to Artifactory. After the job has finalized all its steps in ‘Build history’ section you can notice a link to Artifactory where all the produced artifacts are stored.
 
@@ -42,11 +74,28 @@ Bingo! Everything is set up to publish compiled JAR file to remote server. All y
 
 From now on it is possible to use published artifacts in other projects as a maven dependency. All you need to set this up is to add a dependency with groupId, artifactId you specified in previous steps. Version of the added dependency you cpecify based on version number which is deployed to Artifactory, e.g.:
 
-CODE HERE
+````
+<dependency>
+        <groupId>CommonKeywords</groupId>
+        <artifactId>CommonKeywords</artifactId>
+        <version>0.0.1-SNAPSHOT-54</version>
+</dependency>
+```
 
 Basically Maven searces all its dependencies in central Maven repository first. But we don’t pushed our project there and that’s why we have to point Maven to our private Artifactory server. You can go to Artifactory and under ‘Artifacts’ in ‘Tree browser’ it’s easy to find releases or snapshots repository (we specified it in one of previous steps in job settings). On this page there is  ‘Distribution management’ section which is exactly you need to add to your POM to get proper conneciton to Artifactory. Also, if you want to enable snapshots in addition to release versions please add appropriate property to your ‘repository’ section in the POM. Other option is to separately define snapsot and release repository.
 
-CODE HERE
+````
+<repositories>
+  <repository>
+     <id>CLAESTOR</id>
+     <name>CLAESTOR-snapshots</name>
+     <snapshots>
+                <enabled>true</enabled>
+     </snapshots>
+     <url>http://your_ip_address:8081/artifactory/snapshots</url>
+  </repository>
+</repositories>
+```
 
 That’s it!
 
