@@ -26,7 +26,7 @@ In Post-build actions section add Deploy artifacts to Artifactory step and speci
 
 And, of course, you need to specify project name and path to your repository.
 
-![source settings](file:///Users/daniel.reed/Documents/GitHub/Maven-Jenkins-Artifactory-Integration/images/source-settings.png)
+![source settings](/images/source-settings.png)
 
 As a final step it is required to modify target project’s POM file. Make sure you have maven-compiler-plugin and maven-jar-plugin in ‘plugins’ section.
 
