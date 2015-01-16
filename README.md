@@ -1,6 +1,6 @@
 #Maven + Jenkins + Artifactory Integration
 
-Working at Sinch has its advantages, but I was recently set up with the task of seperating our application code from our sister comopany, as wellas the test framework we use so they can run seperatly. This is great, but for a tech company that has been running for 8 years, this was going to be a big task!
+Working at [Sinch](https://www.sinch.com/) has its advantages, but I was recently set up with the task of seperating our application code from our sister comopany, as wellas the test framework we use so they can run seperatly. This is great, but for a tech company that has been running for 8 years, this was going to be a big task!
 
 In this quick tutorial, I wanted to show how to get started using Artifactory, Maven and Jenkins in sync.
 
@@ -144,4 +144,4 @@ If you have any questions, please leave a comment and I will help you out.
 Thanks,
 
 Maryia Tuleika
-Test Automation Developer at Sinch
+Test Automation Developer at [Sinch](https://www.sinch.com/)
