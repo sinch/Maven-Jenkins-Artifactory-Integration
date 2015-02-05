@@ -34,7 +34,7 @@ Now we have a pipeline that can publish artifacts to the remote Artifactory serv
 
 The next step is configuring a job which will build our target project and push the compiled JAR to Artifactory. 
 
-Create a new job, and in the settings page find the Build section and a specify path to the POM file. Also you will need to add Maven goals to get your project files built. In our case we also would like to synchronize the Jenkins build version with the deployed artifact’s version. This is made via passing Jenkins `BUILD_NUMBER variable to Maven. 
+Create a new job, and in the settings page find the Build section and a specify path to the POM file. Also you will need to add Maven goals to get your project files built. In our case we also would like to synchronize the Jenkins build version with the deployed artifact’s version. This is made via passing Jenkins `BUILD_NUMBER` variable to Maven. 
 
 ![build](images/build.png)
 
