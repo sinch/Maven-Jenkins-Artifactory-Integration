@@ -1,17 +1,16 @@
 #Maven + Jenkins + Artifactory Integration
 
-Working at [Sinch](https://www.sinch.com/) has its advantages, but I was recently set up with the task of seperating our application code from our sister comopany, as wellas the test framework we use so they can run seperatly. This is great, but for a tech company that has been running for 8 years, this was going to be a big task!
+Working at [Sinch](https://www.sinch.com/) has its advantages, but I was recently set with the task of separating our application code from our sister company, as well as the test framework we use so they can run separately. This is great, but for a tech company that has been running for 8 years, this is a big task!
 
 In this quick tutorial, I wanted to show how to get started using Artifactory, Maven and Jenkins in sync.
 
-Before this, we had the luxury of needing only one dependency, which was not a big overhead to keep and exported JAR right in the project folder. This new seperation  made it obvious that we need any remote server acting as an artifacts storage to get better transparency in code changes and version control. 
+Before this, we had the luxury of needing only one dependency, which was not a big overhead to keep, and exported JAR right in the project folder. This new separation made it obvious that we needed any remote server acting as an artifacts storage, to get better transparency in code changes and version control. 
 
-This should take about 30 minites to complete and needs some familiarity with Maven to get started.
-
+This should take about 30 minutes to complete and needs some familiarity with Maven to get started.
 
 ##Setting up Artifactory
 
-![](images/artifactory.png)
+![Artifactory](images/artifactory.png)
 
 First thing to start with is downloading and installing Artifactory from its [official site](http://www.jfrog.com/open-source/).
 
@@ -31,9 +30,9 @@ Next we need to get it integrated into the CI server, which in our case is Jenki
 
 ![developer rights](images/developer-rights.png)
 
-Now we have a pipeline which can publish artifacts to the remote Artifactory server. 
+Now we have a pipeline that can publish artifacts to the remote Artifactory server. 
 
-The next step is configuring a job which will build our target project and push the compiled JAR to artifactory. 
+The next step is configuring a job which will build our target project and push the compiled JAR to Artifactory. 
 
 Create a new job, and in the settings page find the Build section and a specify path to the POM file. Also you will need to add Maven goals to get your project files built. In our case we also would like to synchronize the Jenkins build version with the deployed artifact’s version. This is made via passing Jenkins `BUILD_NUMBER variable to Maven. 
 
@@ -78,7 +77,7 @@ As a final step, you will need to modify the target project’s POM file. Make s
 </plugins>
 ````
 
-It is also important to add groupId, artifactId, verison and packaging to the top-level element of the POM. Please note that we are using the `${build.number}` property, which we are getting from Jenkins as a parameter when the project is built.
+It is also important to add groupId, artifactId, version and packaging to the top-level element of the POM. Please note that we are using the `${build.number}` property, which we are getting from Jenkins as a parameter when the project is built.
 
 ```
 <groupId>CommonKeywords</groupId>
@@ -87,7 +86,7 @@ It is also important to add groupId, artifactId, verison and packaging to the to
 <packaging>jar</packaging>
 ```
 
-Bingo! Everything is set up to publish a compiled JAR file to a remote server. All you need to do is save all your changes, push it to your remote repository and press the ‘Start building’ button in your Jenkins job which is connected to Artifactory. 
+Bingo! Everything is set up to publish a compiled JAR file to a remote server. All you need to do is save all your changes, push it to your remote repository and press the ‘Start building’ button in your Jenkins job that is connected to Artifactory. 
 
 After the job has finalized all of its steps in the ‘Build history’ section, you should see a link to Artifactory where all the produced artifacts are stored.
 
@@ -95,7 +94,7 @@ After the job has finalized all of its steps in the ‘Build history’ section,
 
 From now on it is possible to use published artifacts in other projects as a Maven dependency. 
 
-All you need to set this up is to add a dependency with the groupId and artifactId you specified in the previous steps. The version of the added dependency you can specify based on the version number which is deployed to Artifactory, e.g.:
+All you need to set this up is to add a dependency with the groupId and artifactId you specified in the previous steps. The version of the added dependency you can specify based on the version number that is deployed to Artifactory, e.g.:
 
 ```
 <dependency>
@@ -107,7 +106,7 @@ All you need to set this up is to add a dependency with the groupId and artifact
 
 Basically, Maven searches all its dependencies in the central Maven repository. But we have not pushed our project there and that’s why we have to point Maven to our private Artifactory server. You can go to Artifactory and under ‘Artifacts’ in ‘Tree browser’ it’s easy to find releases or snapshots repository (we specified it in one of previous steps in job settings). 
 
-On this page there is a ‘Distribution management’ section which is exactly where you need to add your POM to get a proper conneciton to Artifactory. Also, if you want to enable snapshots in addition to release versions, you will need to add the appropriate property to your ‘repository’ section in the POM. The other option is to separately define a snapsot and release repository.
+On this page there is a ‘Distribution management’ section, which is exactly where you need to add your POM to get a proper connection to Artifactory. Also, if you want to enable snapshots in addition to release versions, you will need to add the appropriate property to your ‘repository’ section in the POM. The other option is to separately define a snapshot and release repository.
 
 ```
 <repositories>
